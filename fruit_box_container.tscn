@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdcnwi7u6hs60"]
+
+[ext_resource type="PackedScene" uid="uid://dytq4248hebmx" path="res://tile.tscn" id="1_poqt7"]
+[ext_resource type="Script" path="res://fruit_box_container.gd" id="1_puojl"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Floor" parent="." instance=ExtResource("1_poqt7")]
+script = ExtResource("1_puojl")
+
+[node name="Wall1" parent="." instance=ExtResource("1_poqt7")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 1)
+
+[node name="Wall2" parent="." instance=ExtResource("1_poqt7")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, -1)
+
+[node name="Wall3" parent="." instance=ExtResource("1_poqt7")]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -1, 1, 0)
+
+[node name="Wall4" parent="." instance=ExtResource("1_poqt7")]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.997836, 1, 0.00213814)

@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cypdukmwsf8fy"]
+
+[resource]
+transparency = 1
+cull_mode = 2
+diffuse_mode = 3
+roughness = 0.0
+heightmap_scale = 2.605
+uv1_scale = Vector3(4.325, 1.475, 0)
+texture_filter = 1
+texture_repeat = false

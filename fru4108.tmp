@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=3 uid="uid://bih06tai8m8ml"]
+
+[ext_resource type="Material" uid="uid://cypdukmwsf8fy" path="res://fruit-material.tres" id="2_iruk3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fx137"]
+bounce = 0.7
+
+[sub_resource type="GDScript" id="GDScript_kne8w"]
+resource_local_to_scene = true
+script/source = "extends RigidBody3D
+
+@onready var csg_sphere_3d: CSGSphere3D = $CSGSphere3D
+@onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
+
+var fruit_type = \"fruit\"
+var game: Game = null
+
+func _init(game: Game) -> void:
+	print(\"Created a new object: \", get_instance_id())
+	print(\"fruit_type: \", fruit_type)
+	
+func set_radius(radius: float) -> void:
+	csg_sphere_3d.radius = radius
+	collision_shape_3d.shape.radius = radius
+
+	
+func _on_body_shape_entered(body_rid: RID, body: Node, body_shape_index: int, local_shape_index: int) -> void:
+	#if body is Fruit: 
+		if fruit_type == body.fruit_type:   
+			print(\"self fruit_type: \", fruit_type, \" body fruit_type: \", body.fruit_type)                                                                                                                                                                
+			print(\"Collided with: \", body.get_instance_id())
+
+			# Ensure only one object handles the spawning by comparing their instance IDs
+			if get_instance_id() < body.get_instance_id():  # Only one will execute this
+				# Calculate the midpoint between the two objects
+				var position_a = global_transform.origin
+				var position_b = body.global_transform.origin
+				var midpoint = (position_a + position_b) / 2.0
+				
+				## Instantiate the new object (fruit) at the midpoint
+				#var fruit_object = fruit_scene.instantiate()
+				#var fruit_property = game.fruit_properties[0]
+				#fruit_object.fruit_type = fruit_property.name
+				#
+				#var csg_sphere = fruit_object.get_node(\"CSGSphere3D\")
+				#
+				#if csg_sphere:
+					#csg_sphere.radius = fruit_property.radius
+					 ## Create a new SpatialMaterial
+					#var material = StandardMaterial3D.new()
+					#
+					## Set the albedo color (the basic color of the material)
+					#material.albedo_color = fruit_property.color  # Red color
+					#
+					## Apply the material to the CSGSphere
+					#csg_sphere.material = material
+					#
+					#get_parent().add_child(fruit_object)
+					#fruit_object.position = midpoint
+
+			# Destroy both objects
+			body.queue_free()
+			queue_free()
+"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ijqjy"]
+
+[node name="Fruit" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_fx137")
+can_sleep = false
+contact_monitor = true
+max_contacts_reported = 5
+script = SubResource("GDScript_kne8w")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ijqjy")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+use_collision = true
+radial_segments = 25
+rings = 25
+material = ExtResource("2_iruk3")
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

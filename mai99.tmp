@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://c3s2mjw43x5bt"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_tovil"]
+[ext_resource type="PackedScene" uid="uid://b6i4pvrypcp3j" path="res://fruit_box_game.tscn" id="1_ygunc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7wdt7"]
+sky_top_color = Color(0.636482, 0.363677, 0.295543, 1)
+sky_horizon_color = Color(0.758855, 0.687, 0.720303, 1)
+sky_energy_multiplier = 1.75
+ground_bottom_color = Color(0.398938, 0.384321, 0.585671, 1)
+ground_horizon_color = Color(0.758855, 0.687, 0.720303, 1)
+
+[sub_resource type="Sky" id="Sky_o114h"]
+sky_material = SubResource("ProceduralSkyMaterial_7wdt7")
+
+[sub_resource type="Environment" id="Environment_3d276"]
+background_mode = 2
+sky = SubResource("Sky_o114h")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_tovil")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3d276")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.989272, -0.110083, 0.0960313, 0, 0.657375, 0.753563, -0.146083, 0.745479, -0.650323, 0, 0, 0)
+light_energy = 10.25
+shadow_enabled = true
+
+[node name="game" parent="." instance=ExtResource("1_ygunc")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+offset_left = 18.0
+offset_top = 7.0
+offset_right = 58.0
+offset_bottom = 30.0
+text = "0
+"

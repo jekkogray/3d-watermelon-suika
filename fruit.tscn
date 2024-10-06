@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3 uid="uid://bih06tai8m8ml"]
+
+[ext_resource type="Script" path="res://fruit.gd" id="1_ijiec"]
+[ext_resource type="Material" uid="uid://cypdukmwsf8fy" path="res://fruit-material.tres" id="2_iruk3"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fx137"]
+resource_local_to_scene = true
+bounce = 0.5
+absorbent = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qvwx8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ynthx"]
+blend_mode = 1
+emission_enabled = true
+emission = Color(0.9, 0.765, 0, 1)
+emission_energy_multiplier = 13.6
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="SphereMesh" id="SphereMesh_u5cfl"]
+material = SubResource("StandardMaterial3D_ynthx")
+radius = 0.045
+height = 0.1
+radial_segments = 4
+rings = 4
+
+[node name="Fruit" type="RigidBody3D"]
+collision_priority = 0.0
+physics_material_override = SubResource("PhysicsMaterial_fx137")
+gravity_scale = 4.0
+can_sleep = false
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 5
+script = ExtResource("1_ijiec")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_qvwx8")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+use_collision = true
+radius = 0.25
+radial_segments = 25
+rings = 25
+material = ExtResource("2_iruk3")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 10
+mesh = SubResource("SphereMesh_u5cfl")
+emission_shape = 1
+emission_sphere_radius = 0.2
+particle_flag_rotate_y = true
+direction = Vector3(1, 9.8, 1)
+spread = 44.29
+gravity = Vector3(0, 1, 0)
+initial_velocity_max = 1.0
+angle_max = 121.0
+scale_amount_min = 0.0
+scale_amount_max = 3.0
+split_scale = true
+scale_curve_x = null
+scale_curve_y = null
+scale_curve_z = null
+color = Color(0.88, 0.4752, 0.4752, 1)
+hue_variation_max = 1.0
+anim_speed_max = 98.08
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

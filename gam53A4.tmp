@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://chlnc0na2y31x"]
+
+[ext_resource type="PackedScene" uid="uid://j1ackoy1ycrl" path="res://box_container.tscn" id="1_l4jx8"]
+[ext_resource type="Script" path="res://game.gd" id="1_uefab"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m6vtt"]
+albedo_color = Color(0.0156863, 1, 0, 1)
+emission_enabled = true
+emission = Color(0, 0.756863, 0.713726, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_lrxr5"]
+material = SubResource("StandardMaterial3D_m6vtt")
+inner_radius = 1.231
+outer_radius = 1.65
+ring_segments = 3
+
+[node name="game" type="Node3D"]
+script = ExtResource("1_uefab")
+
+[node name="BoxContainer" parent="." instance=ExtResource("1_l4jx8")]
+transform = Transform3D(1, 0, 0, 0, 1.34705, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("1_uefab")
+
+[node name="Pointer" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 3, 0)
+mesh = SubResource("TorusMesh_lrxr5")

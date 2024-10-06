@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bih06tai8m8ml"]
+
+[ext_resource type="Script" path="res://fruit.gd" id="1_ijiec"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_u0qfe"]
+bounce = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ijqjy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5cci1"]
+albedo_color = Color(1, 0.332667, 0.09, 1)
+
+[node name="RigidBody3D" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_u0qfe")
+can_sleep = false
+contact_monitor = true
+max_contacts_reported = 5
+script = ExtResource("1_ijiec")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_ijqjy")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+use_collision = true
+radial_segments = 25
+rings = 25
+material = SubResource("StandardMaterial3D_5cci1")
+
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
